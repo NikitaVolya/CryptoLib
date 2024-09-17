@@ -1,0 +1,2 @@
+from dualBitTextArray import DualBitTextArray
+from CEncripter import CEncripter
