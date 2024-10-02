@@ -1,8 +1,6 @@
 #pragma once
 #include <iostream>
 
-void copy_string(char*& destination, const char* source, size_t size);
-
 template <typename T>
 T create_mask(int size)
 {
