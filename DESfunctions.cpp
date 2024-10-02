@@ -81,16 +81,16 @@ uint64_t function_F(uint64_t R, uint64_t key)
 }
 
 
-void block_des(uint64_t& block, uint64_t key, bool encrypt)
+void block_des(uint64_t* block, uint64_t key, bool encrypt)
 {
-	permitation<uint64_t>(PC, 64, &block, 64);
+	permitation<uint64_t>(PC, 64, block, 64);
 
 	uint32_t L;
 	uint32_t R;
 	uint32_t C;
 	uint32_t D;
 
-	split_data<uint64_t, uint32_t, 64>(&L, &R, block);
+	split_data<uint64_t, uint32_t, 64>(&L, &R, *block);
 	split_data<uint64_t, uint32_t, 56>(&C, &D, key);
 
 	if (!encrypt)
@@ -121,9 +121,8 @@ void block_des(uint64_t& block, uint64_t key, bool encrypt)
 			R = RN;
 		}
 	}
-	
-	block = concatenation_data<uint32_t, uint64_t, 64>(L, R);
-	permitation<uint64_t>(PC_REVERS, 64, &block, 64);
+	*block = concatenation_data<uint32_t, uint64_t, 64>(L, R);
+	permitation<uint64_t>(PC_REVERS, 64, block, 64);
 }
 
 void to_char_array(char* value, uint64_t data)
@@ -132,33 +131,11 @@ void to_char_array(char* value, uint64_t data)
 		value[i] = data >> ((7 - i) * 8);
 }
 
-void des(char*& value, const char key_data[8], int& size, bool encrypt)
-{
-	if (size % 8 != 0)
-	{
-		int space = 8 - size % 8;
-		int new_size = size + space;
-		string_resize(value, size, new_size);
-	}
-
-	uint64_t key = to_binary_data<uint64_t>(key_data, 8);
-	permitation<uint64_t>(IP, 56, &key, 64);
-
-	for (int i = 0; i < size; i += 8)
-	{
-		uint64_t bin_block = to_binary_data<uint64_t>(value + i, 8);
-
-		block_des(bin_block, key, encrypt);
-
-		to_char_array(value + i, bin_block);
-	}
-}
-
 void des(uint64_t* values, const char key_data[8], int size, bool encrypt)
 {
 	uint64_t key = to_binary_data<uint64_t>(key_data, 8);
 	permitation<uint64_t>(IP, 56, &key, 64);
 
 	for (int i = 0; i < size; i++)
-		block_des(values[i], key, encrypt);
+		block_des(values + i, key, encrypt);
 }
