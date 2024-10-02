@@ -69,7 +69,3 @@ class CEncripter:
         if not rep:
             return None
         return json.loads(rep)
-
-
-CEncripter.file_cripting("output\\test_table.xlsx", "20061303", "output\\test_table")
-CEncripter.file_decripting("output\\test_table", "20061303", "output\\test_table_output.xlsx")

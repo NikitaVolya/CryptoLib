@@ -1,2 +1,2 @@
-from dualBitTextArray import UnicodeDESEncryptedString
+from DESEncryptedString import UnicodeDESEncryptedString
 from CEncripter import CEncripter

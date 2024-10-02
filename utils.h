@@ -13,17 +13,6 @@ T create_mask(int size)
 }
 
 template <typename T>
-void print_bin(const T& value, const char ends = '\n')
-{
-	for (int i = sizeof(T) * 8 - 1; i >= 0; i--)
-	{
-		if (i % 8 == 7) std::cout << ' ';
-		std::cout << (value >> i & 1 ? 1 : 0);
-	}
-	std::cout << ends;
-}
-
-template <typename T>
 T to_binary_data(const char* block, int string_size)
 {
 	T res = 0;

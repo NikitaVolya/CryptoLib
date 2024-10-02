@@ -2,6 +2,8 @@
 #include "utils.h"
 #include "permitation_tables.h"
 
+#include <iostream>
+
 template <typename T>
 void permitation(const int* table, const int table_size, T* data, const int data_size)
 {
@@ -101,7 +103,6 @@ void block_des(uint64_t* block, uint64_t key, bool encrypt)
 
 	for (int i = 1; i <= 16; i++)
 	{
-
 		int slide = encrypt ? slide_number(i) : -slide_number(i);
 		data_slide<uint32_t, 28>(&C, slide);
 		data_slide<uint32_t, 28>(&D, slide);
@@ -123,12 +124,6 @@ void block_des(uint64_t* block, uint64_t key, bool encrypt)
 	}
 	*block = concatenation_data<uint32_t, uint64_t, 64>(L, R);
 	permitation<uint64_t>(PC_REVERS, 64, block, 64);
-}
-
-void to_char_array(char* value, uint64_t data)
-{
-	for (int i = 0; i < 8; i++)
-		value[i] = data >> ((7 - i) * 8);
 }
 
 void des(uint64_t* values, const char key_data[8], int size, bool encrypt)

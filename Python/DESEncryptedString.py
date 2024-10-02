@@ -131,13 +131,3 @@ class UnicodeDESEncryptedString:
 
         def __getitem__(self, key: int) -> chr:
             return self.__to_char(self.get(key))
-
-if __name__ == "__main__":
-    a = UnicodeDESEncryptedString.data_from_string("Hello world!!!")
-
-
-    print(a.encrypt("20061303"))
-    print(a[0])
-    print(a.decipher("20061303"))
-    for i in range(a.size):
-        print(a[i])
